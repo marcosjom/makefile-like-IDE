@@ -1,13 +1,25 @@
 
-# from sys-nbframework-src
+# From sys-nbframework-src
 
-The content of this repository is part of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src); it exists to expose and document specific feature of the bigger framework.
+The content of this repository is part of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src); it exists to expose and document a specific feature of the bigger framework.
 
 # makefile-like-IDE
 
-`MakefileFuncs.mk` containing functions that allows you to describe a workspace similarly to XCode, Visual-Studio and other IDEs.
+`MakefileFuncs.mk` contains functions that allows you to describe a workspace similarly to XCode, Visual-Studio and other IDEs and automatizes the compilation of your targets.
 
-Its purpose is to describe your project in an structure and be able to set individual compiler-flags to each code-group. The structure is:
+# Origin
+
+Created by [Marcos Ortega](https://mortegam.com/) to facilitate the compilation of projects on Linux, Android and MacOS by just keeping the description of each project synced with their IDE counterparts.
+
+# Features
+
+- Unified way of describing your projects; like in your IDEs.
+- Command line compilation.
+- Linux, Android, MacOS and other operating systems that supports compiling with `make`. 
+
+# Structure
+
+Its purpose is to describe your project in a structure that allows you to set individual compiler-flags to each code-group. The structure is:
 
 - `Workspace`
   - `Project`
@@ -24,18 +36,13 @@ The `compiler` and `tool-chain` is selected automatically or explicitly by the `
 
 Check the `MakefileProject.mk` and `Makefile` for implementation examples; those files exists in most of my repositories.
 
-
-# Origin
-
-Created by [Marcos Ortega](https://mortegam.com/) to facilitate the compilation of projects on Linux, Android and MacOS by just keeping the description of each project synced with their IDE counterparts.
-
 # Example
 
 For each of your workspaces create a `MakefileProject.mk` file to describe its projects:
 
 ```
 #-------------------------
-# PROJECT
+# PROJECT 1
 #-------------------------
 
 $(eval $(call nbCall,nbInitProject))
@@ -56,7 +63,7 @@ ifeq ($(NB_LIB_Z_SYSTEM),)
 endif
 
 #-------------------------
-# TARGET 1
+# PROJECT 1, TARGET 1
 #-------------------------
 
 $(eval $(call nbCall,nbInitTarget))
@@ -67,13 +74,13 @@ NB_TARGET_SUFIX             := .a
 NB_TARGET_TYPE              := static
     
 #-------------------------
-# TARGET 1, CODE GROUP 1
+# PROJECT 1, TARGET 1, CODE GROUP 1
 #-------------------------
 
 $(eval $(call nbCall,nbInitCodeGrp))
 
 NB_CODE_GRP_NAME            := my_static_lib_src
-NB_CODE_GRP_FLAGS_REQUIRED  += NB_MY_LIB_CORE_STATIC
+NB_CODE_GRP_FLAGS_REQUIRED  += MY_LIB_CORE_STATIC
 NB_CODE_GRP_CFLAGS          += 
 NB_CODE_GRP_CXXFLAGS        += -std=c++20
 NB_CODE_GRP_INCLUDES        += path/include path2/include
@@ -83,13 +90,13 @@ NB_CODE_GRP_LIBS            += pthread m
 $(eval $(call nbCall,nbBuildCodeGrpRules))
 
 #-------------------------
-# TARGET RULES
+# CREATE TARGET 1 RULES
 #-------------------------
 
 $(eval $(call nbCall,nbBuildTargetRules))
 
 #-------------------------
-# TARGET 2
+# PROJECT 1, TARGET 2
 #-------------------------
 
 $(eval $(call nbCall,nbInitTarget))
@@ -100,13 +107,13 @@ NB_TARGET_SUFIX             := .exe
 NB_TARGET_TYPE              := exe
     
 #-------------------------
-# TARGET 2, CODE GROUP 1
+# PROJECT 1, TARGET 2, CODE GROUP 1
 #-------------------------
 
 $(eval $(call nbCall,nbInitCodeGrp))
 
 NB_CODE_GRP_NAME            := my_exe_src
-NB_CODE_GRP_FLAGS_ENABLES   += NB_MY_LIB_CORE_STATIC
+NB_CODE_GRP_FLAGS_ENABLES   += MY_LIB_CORE_STATIC
 NB_CODE_GRP_CFLAGS          += 
 NB_CODE_GRP_CXXFLAGS        += -std=c++20
 NB_CODE_GRP_INCLUDES        += path/include path2/include
@@ -116,22 +123,22 @@ NB_CODE_GRP_LIBS            +=
 $(eval $(call nbCall,nbBuildCodeGrpRules))
 
 #-------------------------
-# TARGET RULES
+# CREATE TARGET 2 RULES
 #-------------------------
 
 $(eval $(call nbCall,nbBuildTargetRules))
 
 #-------------------------
-# PROJECT RULES
+# CREATE PROJECT 1 RULES
 #-------------------------
 
 $(eval $(call nbCall,nbBuildProjectRules))
 
 ```
 
-In this example your workspace contains a project with two targets: `my_lib_static` and `my_exe`; each one with its source files listed. And `my_exe` has been set to depend of `my_lib_static` by enabling your `NB_MY_LIB_CORE_STATIC` flag (you can name the dependencies flags as you like).
+In this example your workspace contains a project with two targets: `my_lib_static` and `my_exe`; each one with a list of source-files. And `my_exe` has been set to depend of `my_lib_static` by enabling your `MY_LIB_CORE_STATIC` flag (you can name the dependencies flags as you like).
 
-In your `Makefile` you can import this worskpace's' projects, and other projects:
+In your `Makefile` you can import this worskpace's projects, and other projects:
 
 ```
 #Import functions
@@ -140,7 +147,7 @@ include MakefileFuncs.mk
 #Init workspace
 $(eval $(call nbCall,nbInitWorkspace))
 
-#Local project
+#Local projects
 include MakefileProject.mk
 
 #Other dependencies projects
