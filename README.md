@@ -1,6 +1,3 @@
-
-# From sys-nbframework-src
-
 The content of this repository is part of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src); it exists to expose and document a specific feature of the bigger framework.
 
 # makefile-like-IDE
