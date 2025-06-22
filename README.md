@@ -171,7 +171,9 @@ or
 make my_exe
 ```
 
-The first command will build only `my_lib_static`. The second command will build `my_exe`, but as `my_lib_static` is a dependency, it will also be built and linked to `my_exe`.
+The first command will build only `my_lib_static`.
+
+The second command will build `my_exe` and `my_lib_static` because is a dependency, then `my_exe` will be linked to `my_lib_static`, `pthread` and `m` (note that `pthread` and `m` are defined as dependencies of `my_lib_static`).
 
 This is useful for complex code structures. I typically work in XCode and Visual-Studio, and once I need to compile my code for other systems (like Linux or Android), I sync my `.mk` project descriptions to the ones in my IDE and run `make`.
 
