@@ -176,7 +176,7 @@ make my_exe
 
 The first command will build only `my_lib_static`. The second command will build `my_exe`, but as `my_lib_static` is a dependency, it will also be built and linked to `my_exe`.
 
-This is useful for complex code structures. I typically work in XCode and Visual-Studio, and once I need to compile my code for other systems (like Linux or Android), I sync my `.mk` project descriptions to the ones my IDE has and run `make`.
+This is useful for complex code structures. I typically work in XCode and Visual-Studio, and once I need to compile my code for other systems (like Linux or Android), I sync my `.mk` project descriptions to the ones in my IDE and run `make`.
 
 # Debugging and setup
 
