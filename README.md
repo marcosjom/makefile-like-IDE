@@ -15,7 +15,7 @@ Created by [Marcos Ortega](https://mortegam.com/) to facilitate the compilation 
 
 - Unified way of describing your projects; like in your IDEs.
 - Command line compilation.
-- Linux, Android, MacOS and other operating systems that supports compiling with `make`. 
+- Linux, Android, MacOS and other systems that supports compiling and linking. 
 
 # Structure
 
@@ -38,12 +38,12 @@ Check the `MakefileProject.mk` and `Makefile` for implementation examples; those
 
 # Example
 
-For each of your workspaces create a `MakefileProject.mk` file to describe its projects:
+For each of your workspaces create a `.mk` file (like `MakefileProjects.mk`) file to describe its projects:
 
 ```
-#-------------------------
+#----------
 # PROJECT 1
-#-------------------------
+#----------
 
 $(eval $(call nbCall,nbInitProject))
 
@@ -62,9 +62,9 @@ ifeq ($(NB_LIB_Z_SYSTEM),)
    NB_PROJECT_CXXFLAGS      += -DZLIB_DEBUG=1
 endif
 
-#-------------------------
+#--------------------
 # PROJECT 1, TARGET 1
-#-------------------------
+#--------------------
 
 $(eval $(call nbCall,nbInitTarget))
 
@@ -73,9 +73,9 @@ NB_TARGET_PREFIX            := lib
 NB_TARGET_SUFIX             := .a
 NB_TARGET_TYPE              := static
     
-#-------------------------
+#----------------------------------
 # PROJECT 1, TARGET 1, CODE GROUP 1
-#-------------------------
+#----------------------------------
 
 $(eval $(call nbCall,nbInitCodeGrp))
 
@@ -89,15 +89,15 @@ NB_CODE_GRP_LIBS            += pthread m
 
 $(eval $(call nbCall,nbBuildCodeGrpRules))
 
-#-------------------------
+#----------------------
 # CREATE TARGET 1 RULES
-#-------------------------
+#----------------------
 
 $(eval $(call nbCall,nbBuildTargetRules))
 
-#-------------------------
+#--------------------
 # PROJECT 1, TARGET 2
-#-------------------------
+#--------------------
 
 $(eval $(call nbCall,nbInitTarget))
 
@@ -106,9 +106,9 @@ NB_TARGET_PREFIX            :=
 NB_TARGET_SUFIX             := .exe
 NB_TARGET_TYPE              := exe
     
-#-------------------------
+#----------------------------------
 # PROJECT 1, TARGET 2, CODE GROUP 1
-#-------------------------
+#----------------------------------
 
 $(eval $(call nbCall,nbInitCodeGrp))
 
@@ -122,15 +122,15 @@ NB_CODE_GRP_LIBS            +=
 
 $(eval $(call nbCall,nbBuildCodeGrpRules))
 
-#-------------------------
+#----------------------
 # CREATE TARGET 2 RULES
-#-------------------------
+#----------------------
 
 $(eval $(call nbCall,nbBuildTargetRules))
 
-#-------------------------
+#-----------------------
 # CREATE PROJECT 1 RULES
-#-------------------------
+#-----------------------
 
 $(eval $(call nbCall,nbBuildProjectRules))
 
@@ -152,17 +152,17 @@ include MakefileFuncs.mk
 $(eval $(call nbCall,nbInitWorkspace))
 
 #Local projects
-include MakefileProject.mk
+include MakefileProjects.mk
 
 #Other dependencies projects
-#include ../other/MakefileProject.mk
-#include ../other2/MakefileProject.mk
+#include ../other/MakefileProjects.mk
+#include ../other2/MakefileProjects.mk
 
 #Build workspace
 $(eval $(call nbCall,nbBuildWorkspaceRules))
 ```
 
-With this example you now can call:
+With this example you now can:
 
 ```
 make my_lib_static
