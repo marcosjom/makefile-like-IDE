@@ -1,4 +1,4 @@
-The content of this repository is part of [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src); it exists to expose and document a specific feature of the bigger framework.
+This repository contains linked files from [sys-nbframework-src](https://github.com/marcosjom/sys-nbframework-src); it exists to expose and document a specific feature of the bigger framework.
 
 # makefile-like-IDE
 
@@ -35,7 +35,7 @@ Check the `MakefileProject.mk` and `Makefile` for implementation examples; those
 
 # Example
 
-For each of your workspaces create a `.mk` file (like `MakefileProjects.mk`) file to describe its projects:
+For each of your workspaces create a `.mk` file (like `MakefileProjects.mk`) to describe its projects:
 
 ```
 #----------
